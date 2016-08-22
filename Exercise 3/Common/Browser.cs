@@ -4,6 +4,8 @@ using System.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
+using AutomatedTester.BrowserMob;
+using Exercise_3.Helpers;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
@@ -82,6 +84,8 @@ namespace AutoTests.Common
     {
         public static Browser browser = new Browser();
 
+        //public static Proxy seleniumProxy = new Proxy { HttpProxy = ProxyHelper.GetProxy().SeleniumProxy };
+
         public static Browser GetBrowser()
         {
             if (!browser.IsValueCreated)
@@ -97,7 +101,9 @@ namespace AutoTests.Common
                         browser = new Browser(new InternetExplorerDriver(ConfigurationManager.AppSettings["IExplorerDriverPath"]));
                         break;
                     case "chrome":
-                        browser = new Browser(new ChromeDriver(ConfigurationManager.AppSettings["ChromeDriverPath"]));
+                        var opts = new ChromeOptions();
+                        opts.Proxy = new Proxy { HttpProxy = ProxyHelper.GetProxy().SeleniumProxy };
+                        browser = new Browser(new ChromeDriver(ConfigurationManager.AppSettings["ChromeDriverPath"], opts));
                         break;
                     default:
                         throw new WebDriverException("There are no browsers");

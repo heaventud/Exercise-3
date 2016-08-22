@@ -36,6 +36,11 @@ namespace AutoTests.Tests
             {
                 Assert.IsTrue(movies[i] == movieName);
             }
+
+            foreach (var code in ProxyHelper.GetAllResponseCodes())
+            {
+                Assert.IsTrue(code < 400 | code > 500);
+            }
         }
     }
 
@@ -55,6 +60,11 @@ namespace AutoTests.Tests
         {
             var movies = GetMovieNames();
             Assert.IsFalse(movies.Contains(fakeName));
+
+            foreach (var code in ProxyHelper.GetAllResponseCodes())
+            {
+                Assert.IsTrue(code < 400 | code > 500);
+            }
         }
     }
 }

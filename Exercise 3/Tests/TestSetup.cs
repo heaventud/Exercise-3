@@ -5,6 +5,7 @@ using System.Text;
 using System.Configuration;
 using NUnit.Framework;
 using AutoTests.Common;
+using Exercise_3.Helpers;
 
 namespace AutoTests.Tests
 {
@@ -19,6 +20,12 @@ namespace AutoTests.Tests
             browser.Navigate().GoToUrl(Settings.BrowserUrl);
             var loginHelper = new LoginHelper();
             loginHelper.Login("admin", "admin");
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+           ProxyHelper.ProxyTeardown(); 
         }
     }
 }
